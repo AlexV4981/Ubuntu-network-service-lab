@@ -1,5 +1,9 @@
 # Ubuntu Network Service Lab
 
+## [Recruiter: Start Here — Two-Minute Project Tour](START_HERE.md)
+
+**Short on time?** Open the guide above for the key skills, direct code links, and a suggested reading order.
+
 **SQLite audit logging, parameterized SQL, and incremental data ingestion in a working service-management lab.**
 
 I built this personal Ubuntu lab to manage Minecraft containers through a Java Discord bot and Python Flask API. Its database layer records command activity, persists cooldowns, and feeds a Python pipeline that exports structured events. The links below go directly to the relevant implementation.
