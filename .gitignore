@@ -1,6 +1,12 @@
 # Environment secrets
 .env
 .env.*
+!.env.example
+
+# Python build output
+__pycache__/
+*.py[cod]
+.venv/
 
 # Java / Maven
 target/
@@ -20,6 +26,9 @@ ingest/raw/*
 ingest/processed/*
 ingest/state/*
 
+# Host-specific Minecraft data
+minecraft/
+
 # IDE files
 .idea/
 .vscode/
@@ -31,3 +40,4 @@ Thumbs.db
 
 # Docker runtime files
 docker-compose.override.yml
+

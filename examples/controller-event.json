@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-01-01T12:00:00",
+  "source": "controller",
+  "event_type": "command",
+  "actor": {"id": "example-user-id", "name": "example-user"},
+  "action": {"name": "restart", "category": "server_control"},
+  "result": {"status": "success"},
+  "metadata": {"db_id": 1, "previous_state": "online", "new_state": "starting"}
+}

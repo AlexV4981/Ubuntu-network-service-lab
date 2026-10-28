@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+**/target
+**/__pycache__
+**/*.pyc
+**/*.db
+**/*.sqlite*
+ingest/processed
+ingest/state
+minecraft

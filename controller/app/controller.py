@@ -352,7 +352,6 @@ def active_server():
 
 @app.get("/status")
 def status():
-    print("STATUS HEADERS:", dict(request.headers), flush=True)
 
     user_id = request.headers.get(
         "X-User-ID",
@@ -642,3 +641,4 @@ app.run(
     host="0.0.0.0",
     port=5000
 )
+

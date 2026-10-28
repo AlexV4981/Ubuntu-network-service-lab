@@ -3,13 +3,11 @@ services:
     build: .
     container_name: helpy-bot
     restart: unless-stopped
-    user: "${UID}:${GID}"
+    user: "${UID:-1000}:${GID:-1000}"
     environment:
       MAVEN_CONFIG: /tmp/.m2
     env_file:
       - .env
-    volumes:
-      - ./ingest:/ingest
     networks:
       - helpy-network
     stdin_open: true
@@ -40,8 +38,8 @@ services:
       - ./ingest:/ingest
 
       # Minecraft logs
-      - /home/titus-tech/mc-cobblemon/data/logs:/mc-logs/mc-cobblemon:ro
-      - /home/titus-tech/mc-horror/data/logs:/mc-logs/mc-horror:ro
+      - ${MC_COBBLEMON_LOG_DIR:-./minecraft/mc-cobblemon/logs}:/mc-logs/mc-cobblemon:ro
+      - ${MC_HORROR_LOG_DIR:-./minecraft/mc-horror/logs}:/mc-logs/mc-horror:ro
 
       # Controller SQLite database
       - ./controller/data:/controller/data:ro
@@ -56,3 +54,4 @@ services:
 networks:
   helpy-network:
     name: helpy-network
+
