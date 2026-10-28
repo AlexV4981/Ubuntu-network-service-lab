@@ -1,25 +1,17 @@
 services:
-
   helpy-bot:
     build: .
     container_name: helpy-bot
     restart: unless-stopped
-
     user: "${UID}:${GID}"
-
     environment:
       MAVEN_CONFIG: /tmp/.m2
-
     env_file:
       - .env
-
     volumes:
       - ./ingest:/ingest
-      - /home/titus-tech/mc-cobblemon/data/logs:/mc-logs:ro
-
     networks:
       - helpy-network
-
     stdin_open: true
     tty: true
 
@@ -27,18 +19,40 @@ services:
   minecraft-controller:
     build:
       context: ./controller
-
     container_name: minecraft-controller
     restart: unless-stopped
+    networks:
+      - helpy-network
+    volumes:
+      # Docker API access for controlling Minecraft containers
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # Controller database
+      - ./controller/data:/data
+
+
+  ingest:
+    build: ./ingest
+    container_name: ingest
+    restart: unless-stopped
+    volumes:
+      # ingestion application + output/state
+      - ./ingest:/ingest
+
+      # Minecraft logs
+      - /home/titus-tech/mc-cobblemon/data/logs:/mc-logs/mc-cobblemon:ro
+      - /home/titus-tech/mc-horror/data/logs:/mc-logs/mc-horror:ro
+
+      # Controller SQLite database
+      - ./controller/data:/controller/data:ro
+
+    depends_on:
+      - minecraft-controller
 
     networks:
       - helpy-network
 
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./controller/data:/data
 
 networks:
-
   helpy-network:
     name: helpy-network

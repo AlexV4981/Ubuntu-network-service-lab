@@ -1,28 +1,29 @@
 package bot.commands;
 
-import bot.services.MinecraftQueryService;
+import bot.services.MinecraftService;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 public class StatusCommand implements Command {
 
-    private final MinecraftQueryService minecraftQueryService;
+    private final MinecraftService minecraftService;
 
-    public StatusCommand(MinecraftQueryService minecraftQueryService) {
-        this.minecraftQueryService = minecraftQueryService;
+    public StatusCommand(MinecraftService minecraftService) {
+        this.minecraftService = minecraftService;
     }
-
 
     @Override
     public String getName() {
         return "status";
     }
 
-
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
-        String status = minecraftQueryService.getStatus();
+        String response = minecraftService.getStatus(
+                event.getUser().getId(),
+                event.getUser().getName()
+        );
 
-        event.reply(status).queue();
+        event.reply(response).queue();
     }
 }

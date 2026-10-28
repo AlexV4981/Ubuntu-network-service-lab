@@ -8,7 +8,6 @@ import bot.commands.DownCommand;
 import bot.commands.RestartCommand;
 
 import bot.services.MinecraftService;
-import bot.services.MinecraftQueryService;
 import bot.services.PermissionService;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -23,7 +22,6 @@ public class SlashCommandListener extends ListenerAdapter {
 
 
     public SlashCommandListener(
-            MinecraftQueryService minecraftQueryService,
             MinecraftService minecraftService,
             PermissionService permissionService
     ) {
@@ -37,7 +35,7 @@ public class SlashCommandListener extends ListenerAdapter {
 
         commands.put(
                 "status",
-                new StatusCommand(minecraftQueryService)
+                new StatusCommand(minecraftService)
         );
 
 
