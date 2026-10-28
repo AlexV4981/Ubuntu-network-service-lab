@@ -1,8 +1,12 @@
 # Ubuntu Network Service Lab
 
-## [Recruiter: Start Here — Two-Minute Project Tour](START_HERE.md)
+## Explore the Project
 
-**Short on time?** Open the guide above for the key skills, direct code links, and a suggested reading order.
+### [Cybersecurity Skills & Code](CYBERSECURITY.md)
+Role-based access, validation, audit logging, and event processing.
+
+### [Database Skills & Code](DATABASE.md)
+SQLite table definitions, parameterized queries, record updates, and incremental extraction.
 
 **SQLite audit logging, parameterized SQL, and incremental data ingestion in a working service-management lab.**
 

@@ -1,6 +1,6 @@
-# Recruiter Quick Tour
+# Cybersecurity Skills and Code
 
-**Two-minute overview: Python, Java, Linux, access controls, audit logging, and structured data.**
+**Python and Java examples of access controls, operational validation, audit logging, and structured events.**
 
 This personal lab manages Minecraft containers through a Java Discord bot and Python Flask API. It provides concrete examples of how I connect application logic, operational controls, and records that can be reviewed when troubleshooting.
 
@@ -23,4 +23,4 @@ This personal lab manages Minecraft containers through a Java Discord bot and Py
 
 The role checks protect the Discord commands; the controller does not yet authenticate API callers. Some outcomes are logged, but the records are not a complete security audit trail. Wazuh integration and network segmentation remain planned. This is a lab project, with no claim of production security operations or penetration-testing experience.
 
-[Read the database walkthrough and setup instructions](README.md) · [View the separate Debian Linux lab](https://github.com/AlexV4981/debian-network-service-lab)
+[Explore the database code](DATABASE.md) · [Setup and project overview](README.md) · [View the separate Debian Linux lab](https://github.com/AlexV4981/debian-network-service-lab)
