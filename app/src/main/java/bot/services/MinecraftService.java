@@ -63,17 +63,19 @@ public class MinecraftService {
     }
 
 
+public String getStatus(
+        String userId,
+        String username
+) {
 
-    public String getStatus() {
+    return sendRequest(
+            "GET",
+            "/status",
+            userId,
+            username
+    );
 
-        return sendRequest(
-                "GET",
-                "/status",
-                "system",
-                "status"
-        );
-
-    }
+}
 
 
 

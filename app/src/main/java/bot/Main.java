@@ -1,7 +1,6 @@
 package bot;
 
 import bot.listeners.SlashCommandListener;
-import bot.services.MinecraftQueryService;
 import bot.services.MinecraftService;
 import bot.services.PermissionService;
 
@@ -33,11 +32,6 @@ public class Main {
         }
 
 
-
-        MinecraftQueryService minecraftQueryService =
-                new MinecraftQueryService();
-
-
         MinecraftService minecraftService =
                 new MinecraftService();
 
@@ -51,7 +45,6 @@ public class Main {
                 .createDefault(token)
                 .addEventListeners(
                         new SlashCommandListener(
-                                minecraftQueryService,
                                 minecraftService,
                                 permissionService
                         )

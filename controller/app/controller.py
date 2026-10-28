@@ -10,7 +10,12 @@ app = Flask(__name__)
 client = docker.from_env()
 
 
-CONTAINER_NAME = "mc-cobblemon"
+SERVERS = {
+    "mc-cobblemon": "cobblemon",
+    "mc-horror": "horror"
+}
+
+DEFAULT_SERVER = "mc-horror"
 
 DATABASE = "/data/controller.db"
 
@@ -107,12 +112,13 @@ def log_command(
 # Docker
 # =========================
 
-def get_container():
+
+def get_container(container_name):
 
     try:
 
         container = client.containers.get(
-            CONTAINER_NAME
+            container_name
         )
 
         container.reload()
@@ -126,13 +132,46 @@ def get_container():
 
 
 
+def get_active_container():
+
+    active = None
+    newest_time = None
+
+
+    for container_name in SERVERS:
+
+        container = get_container(container_name)
+
+
+        if container is None:
+            continue
+
+
+        if container.status != "running":
+            continue
+
+
+        started = container.attrs["State"]["StartedAt"]
+
+
+        if newest_time is None or started > newest_time:
+
+            newest_time = started
+            active = container
+
+
+    return active
+
+
 def get_server_state(container):
 
     if container is None:
         return "offline"
 
 
-    docker_state = container.status
+    if container.status != "running":
+
+        return "offline"
 
 
     health = None
@@ -148,16 +187,9 @@ def get_server_state(container):
 
 
 
-    if docker_state != "running":
-
-        return "offline"
-
-
-
     if health == "starting":
 
         return "starting"
-
 
 
     if health == "healthy":
@@ -165,10 +197,21 @@ def get_server_state(container):
         return "online"
 
 
-
     return "online"
 
 
+
+def get_server_name(container):
+
+    if container is None:
+
+        return "none"
+
+
+    return SERVERS.get(
+        container.name,
+        "unknown"
+    )
 
 # =========================
 # Cooldowns
@@ -287,22 +330,76 @@ def health():
     return "controller is online"
 
 
+@app.get("/active-server")
+def active_server():
+
+    container = get_active_container()
+
+
+    if container is None:
+
+        return {
+            "container": None,
+            "server": None
+        }
+
+
+    return {
+        "container": container.name,
+        "server": SERVERS[container.name]
+    }
+
 
 @app.get("/status")
 def status():
+    print("STATUS HEADERS:", dict(request.headers), flush=True)
+
+    user_id = request.headers.get(
+        "X-User-ID",
+        "Unknown"
+    )
+
+    user = request.headers.get(
+        "X-User",
+        "Unknown"
+    )
+
 
     if not check_status_limit():
+
+        log_command(
+            user_id,
+            user,
+            "status",
+            "rate_limited",
+            "unknown",
+            "unknown"
+        )
 
         return "Status limit reached. Try again later."
 
 
 
-    container = get_container()
+    container = get_active_container()
 
     state = get_server_state(container)
 
+    server_name = get_server_name(container)
 
-    return f"server is {state}"
+
+    log_command(
+        user_id,
+        user,
+        "status",
+        "success",
+        state,
+        state
+    )
+
+
+    return f"{server_name} server is {state}"
+
+
 
 
 
@@ -319,11 +416,14 @@ def up():
         "Unknown"
     )
 
-
-    container = get_container()
+    container = get_active_container()
 
     state = get_server_state(container)
 
+    if container is None:
+        container = client.containers.get(DEFAULT_SERVER)
+
+    state = get_server_state(container)
 
 
     if state == "online":
@@ -401,7 +501,7 @@ def down():
     )
 
 
-    container = get_container()
+    container = get_active_container()
 
     state = get_server_state(container)
 
@@ -482,7 +582,7 @@ def restart():
     )
 
 
-    container = get_container()
+    container = get_active_container()
 
     state = get_server_state(container)
 
