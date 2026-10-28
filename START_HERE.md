@@ -23,4 +23,4 @@ This personal lab manages Minecraft containers through a Java Discord bot and Py
 
 The role checks protect the Discord commands; the controller does not yet authenticate API callers. Some outcomes are logged, but the records are not a complete security audit trail. Wazuh integration and network segmentation remain planned. This is a lab project, with no claim of production security operations or penetration-testing experience.
 
-[Read the database walkthrough and setup instructions](README.md) · [View the separate Debian Linux lab](https://github.com/AlexV4981/debian-network-service-lab/blob/main/START_HERE.md)
+[Read the database walkthrough and setup instructions](README.md) · [View the separate Debian Linux lab](https://github.com/AlexV4981/debian-network-service-lab)
