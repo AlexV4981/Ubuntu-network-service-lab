@@ -1,5 +1,14 @@
 # Ubuntu Network Service Lab
 
+## Quick evidence for reviewers
+
+- **Access control:** [Java permission service](https://github.com/AlexV4981/Ubuntu-network-service-lab/blob/main/app/src/main/java/bot/services/PermissionService.java) and [command-level enforcement](https://github.com/AlexV4981/Ubuntu-network-service-lab/blob/main/app/src/main/java/bot/commands/UpCommand.java)
+- **SQL persistence:** [SQLite schema, parameterized audit writes and cooldown handling](https://github.com/AlexV4981/Ubuntu-network-service-lab/blob/main/controller/app/controller.py) · [Database walkthrough](DATABASE.md)
+- **Structured logs:** [Incremental SQLite event parsing](https://github.com/AlexV4981/Ubuntu-network-service-lab/blob/main/ingest/parsers/controller.py) · [Example sanitized event](examples/controller-event.json)
+- **Configuration:** [Docker Compose](https://github.com/AlexV4981/Ubuntu-network-service-lab/blob/main/docker-compose.yml) · [Cybersecurity limitations and scope](CYBERSECURITY.md)
+
+This is a personal lab. Bot-layer role checks do not replace controller API authentication; the current controller API is not suitable for exposure to untrusted networks.
+
 ## Explore the Project
 
 ### [Cybersecurity Skills & Code](CYBERSECURITY.md)
