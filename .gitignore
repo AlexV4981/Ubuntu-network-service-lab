@@ -1,43 +1,47 @@
-# Environment secrets
+# Secrets and host-specific configuration
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.token
+secrets/
+**/secrets/
+docker-compose.override.yml
 
-# Python build output
+# Python and Java build output
 __pycache__/
 *.py[cod]
+.pytest_cache/
 .venv/
-
-# Java / Maven
+venv/
 target/
 *.jar
 
-# Runtime databases
+# Databases, logs, exports, recordings and backups
 *.db
 *.sqlite
 *.sqlite3
-
-# Logs
+*.db-wal
+*.db-shm
+*.db-journal
 *.log
+*.zip
+*.tar.gz
 logs/
-
-# Runtime ingest data
-ingest/raw/*
-ingest/processed/*
-ingest/state/*
-
-# Host-specific Minecraft data
+data/
+backups/
+controller/data/
+ingest/raw/
+ingest/processed/
+ingest/state/
 minecraft/
 
-# IDE files
+# Local editor / operating system
 .idea/
 .vscode/
 *.iml
-
-# OS files
 .DS_Store
 Thumbs.db
-
-# Docker runtime files
-docker-compose.override.yml
-
